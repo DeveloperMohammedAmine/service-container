@@ -10,7 +10,7 @@ class DBService {
         return $all;
     }
     
-    public function getAllPostsWithPagination($model, array $with, int $itemsPerPage) {
+    public function getAllWithPagination($model, array $with, int $itemsPerPage) {
         $all = $model->with($with)->paginate($itemsPerPage);
         return $all;
     }

@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Services\DBService;
 use Illuminate\Http\Request;
+use App\Services\SettingService;
 
 class PostController extends Controller
 {
 
 
-    public function __construct(protected DBService $DBService)
+    public function __construct(
+        protected DBService $DBService,
+        protected SettingService $settingService
+    )
     {
     }
 
@@ -22,7 +26,16 @@ class PostController extends Controller
 
     public function index()
     {
-        return $posts = $this->DBService->getAllPostsWithPagination(new Post, [], 5);
+        
+        $setting = [
+            'type' => 'email',
+            'value' => 'mohammed@gmail.com'
+        ];
+
+        return $this->settingService->setSetting($setting);
+        
+        // return $this->settingService->getSetting('facebook');
+        // return $posts = $this->DBService->getAllWithPagination(new Post, [], 5);
     }
 
     /**
@@ -32,7 +45,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        // return view('posts.create');
 
         $data = [
             'title' => 'just for testing 22',
